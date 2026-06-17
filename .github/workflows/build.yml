@@ -19,25 +19,20 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: 🐦 3. 準備 Flutter 廚具 (Flet 專用引擎)
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: 🐍 4. 設定 Python 雲端環境
+      - name: 🐍 3. 設定 Python 雲端環境
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: 📦 5. 安裝打包工具 (Flet)
+      - name: 📦 4. 安裝打包工具 (Flet)
         run: |
           pip install --upgrade pip
           pip install flet
 
-      - name: 🚀 6. 開始編譯 APK (需耗時 3~5 分鐘)
-        run: flet build apk
+      - name: 🚀 5. 開始編譯 APK (💥 加入 yes | 自動同意所有提示)
+        run: yes | flet build apk
 
-      - name: 📤 7. 產出並上傳 APK 檔案給我們下載
+      - name: 📤 6. 產出並上傳 APK 檔案給我們下載
         uses: actions/upload-artifact@v4
         with:
           name: camera-app-apk
