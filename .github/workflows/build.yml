@@ -3,7 +3,7 @@ name: Build Android APK
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # 這個機關允許我們手動點擊按鈕開始打包
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -13,20 +13,31 @@ jobs:
       - name: 📥 1. 取得程式碼
         uses: actions/checkout@v4
 
-      - name: 🐍 2. 設定 Python 雲端環境
+      - name: ☕ 2. 準備 Java 廚具 (Android 必備)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: 🐦 3. 準備 Flutter 廚具 (Flet 專用引擎)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: 🐍 4. 設定 Python 雲端環境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # 使用最穩定相容的 3.11 版
+          python-version: '3.11'
 
-      - name: 📦 3. 安裝打包工具 (Flet)
+      - name: 📦 5. 安裝打包工具 (Flet)
         run: |
           pip install --upgrade pip
           pip install flet
 
-      - name: 🚀 4. 開始編譯 APK (需耗時 3~5 分鐘)
+      - name: 🚀 6. 開始編譯 APK (需耗時 3~5 分鐘)
         run: flet build apk
 
-      - name: 📤 5. 產出並上傳 APK 檔案給我們下載
+      - name: 📤 7. 產出並上傳 APK 檔案給我們下載
         uses: actions/upload-artifact@v4
         with:
           name: camera-app-apk
