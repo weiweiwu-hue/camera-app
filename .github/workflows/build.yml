@@ -29,7 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 💥 終極修正：利用 yes | 指令，強制自動回答所有 [Y/n] 問題！
       - name: 🚀 編譯 APK
         run: yes | flet build apk
 
